@@ -9,9 +9,6 @@ socket.on('disconnect', function() {
 });
 
 socket.on('newMessage', function(message) {
-    console.log('New email!');
-    console.log(message.from);
-    console.log(message.text);
-    console.log(message.createdAt);
+    console.log(message)
 });
 
