@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Live Chat</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
-    <h1>Live Chat homepage</h1>
+<body class="chat">
+    <div class="chat__sidebar">
+        <h3>People</h3>
+        <div id="users"></div>
+    </div>
 
-    <ol id="messagesList"></ol>
+    <div class="chat__main">
+        <ol id="messagesList" class="chat__messages"></ol>
 
-    <form id="inputForm">
-        <input name="message" type="text" placeholder="Message"/>
-        <button>Send</button>
-    </form>
-    <button id="send-location">Send location</button>
+        <footer class="chat__footer">
+            <form id="inputForm">
+                <input name="message" type="text" placeholder="Message"/>
+                <button>Send</button>
+            </form>
+            <button id="send-location">Send location</button>
+        </footer>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/jquery-3.3.1.min.js"></script>
