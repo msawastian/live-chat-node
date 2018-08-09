@@ -9,31 +9,27 @@ socket.on('disconnect', function() {
 });
 
 socket.on('newMessage', function(message) {
-    moment.locale('pl');
+    var template = jQuery('#messageTemplate').html();
     var formattedTime = moment(message.createdAt).format('LTS');
-    var li = jQuery('<li></li>');
-    li.text(`${formattedTime} ${message.from}: ${message.text}`);
+    var html = Mustache.render(template, {
+        text: message.text,
+        from: message.from,
+        createdAt: formattedTime
+    });
 
-    jQuery('#messagesList').append(li);
+    jQuery('#messagesList').append(html)
 });
 
 socket.on('newLocationMessage', function(message) {
-    var li = jQuery('<li></li>');
-    var a = jQuery('<a target="_blank">My current location</a>');
+    var template = jQuery('#locationMessageTemplate').html();
     var formattedTime = moment(message.createdAt).format('LTS');
+    var html = Mustache.render(template, {
+        url: message.url,
+        from: message.from,
+        createdAt: formattedTime
+    });
 
-    li.text(`${formattedTime} ${message.from}: `);
-    a.attr('href', message.url);
-
-    li.append(a);
-    jQuery('#messagesList').append(li);
-});
-
-socket.emit('createMessage', {
-    from: 'Mat',
-    text: 'Hey!'
-}, function(data) {
-    console.log(data)
+    jQuery('#messagesList').append(html);
 });
 
 jQuery('#inputForm').on('submit', function (event) {
@@ -42,7 +38,7 @@ jQuery('#inputForm').on('submit', function (event) {
     var messageField = jQuery('[name=message]');
 
     socket.emit('createMessage', {
-        from: 'Olga',
+        from: 'User',
         text: messageField.val()
     }, function () {
         messageField.val('')
